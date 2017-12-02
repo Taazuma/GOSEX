@@ -246,7 +246,7 @@ Config:MenuElement({type = MENU, name = "Settings", id = "Igi"})
 Config.Igi:MenuElement({type = MENU, name = "Ignite to kill?", id = "Ignite" , leftIcon = "https://www.mobafire.com/images/summoner-spell/ignite.png"})
 Config.Igi.Ignite:MenuElement({name = "Enabled", id = "Enabled", value = true})
 Config.Igi.Ignite:MenuElement({name = "Enabled Always", id = "always", value = true})
-Config.Igi.Ignite:MenuElement({name = "Only on Combo", id = "comboonly", value = true})
+Config.Igi.Ignite:MenuElement({name = "Only on Combo", id = "comboonly", value = false})
 
 ----------------------------------------------------------------------------------------------------------------------
 
