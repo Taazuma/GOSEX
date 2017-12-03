@@ -249,7 +249,7 @@ end
 
 -------------------------------------------------AKALI-----------------------------------------------------------------
 
-local Config = MenuElement({type = MENU, name = "Akali", id = "Akali", leftIcon = "http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Akali.png"})
+local Config = MenuElement({type = MENU, name = "Ronin Akali", id = "Akali", leftIcon = "http://ddragon.leagueoflegends.com/cdn/6.24.1/img/champion/Akali.png"})
 
 -- COMBO
 
@@ -294,11 +294,11 @@ Config.Harass.E:MenuElement({name = "Enabled", id = "Enabled", value = true})
 Config.Harass:MenuElement({name = "Energy Manager", id = "Energy", value = 100, min = 0, max = 200, step = 5})
 
 	-- Clear
-Config.Clears:MenuElement({id = "Clears", name = "Clear", type = MENU})
-Config.Clears:MenuElement({id = "quse", name = "Use [Q]", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/AkaliMota.png"})
-Config.Clears:MenuElement({id = "quse", name = "Use [E]", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/AkaliShadowSwipe.png"})
-Config.Clears:MenuElement({id = "usemana", name = "Usage", value = 25, min = 0, max =      100, step = 1})
-Config.Clears:MenuElement({id = "sliderminion", name = "Minions", value = 3, min = 0, max =      10, step = 1})
+--Config:MenuElement({type = MENU, name = "Clear Settings", id = "Clears"})
+--Config.Clears:MenuElement({id = "Clears", name = "Clear", type = MENU})
+--Config.Clears:MenuElement({id = "quse", name = "Use [Q]", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/AkaliMota.png"})
+--Config.Clears:MenuElement({id = "quse", name = "Use [E]", value = true, leftIcon = "http://static.lolskill.net/img/abilities/64/AkaliShadowSwipe.png"})
+--Config.Clears:MenuElement({id = "usemana", name = "% Usage", value = 25, min = 0, max =      100, step = 1})
 
 -- LASTHIT
 
@@ -360,9 +360,6 @@ function OnTick()
 			local Zhonya = aGetItemSlot(myHero,3157)
 			local myHpPC=(myHero.health/myHero.maxHealth)*100
 			local zhonyaPC=20
-      if Orb.laneClear or Orb.jungleClear then
-      Clear()
-      end
 				if Zhonya >= 1 and Config.Items.Zhonya.Enabled:Value() and CanUseSpell(Zhonya) and myHpPC<=zhonyaPC then
                 Control.CastSpell(Item_HK[Zhonya])
             end
@@ -477,21 +474,6 @@ function Combo(target)
             end
         end
     end
-end
-
-function Clear()
-  	        for _, minion in pairs(GetMinions()) do
-		if minion and minion.isEnemy and not minion.dead and GetDistance(myHero.pos, minion.pos) <= GetRange(_Q) then
-                if Config.Key.Clears:Value() and myHero.mana >= Config.Clears.usemana:Value() then
-                    if Config.Clears.quse.Enabled:Value() and Ready(_Q) and IsValidTarget(minion, GetRange(_Q), false, myHero.pos) and getdmg("Q", minion, myHero) > minion.health then
-                                    Control.CastSpell(HK_Q, minion.pos)
-                end
-                    if Config.Clears.euse.Enabled:Value() and Ready(_E) and IsValidTarget(minion, GetRange(_E), false, myHero.pos) and minion > Config.Clears.sliderminion:Value() then
-                                    Control.CastSpell(HK_E)
-                end
-			end
-		end
-	end
 end
 
 function Flee()
