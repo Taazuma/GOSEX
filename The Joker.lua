@@ -1,7 +1,7 @@
 require "DamageLib"
 require "HPred"
 class "Ronin"
-
+--Thanks to DamnedNoob
 local isEvading 					= ExtLibEvade and ExtLibEvade.Evading
 local _atan 						= math.atan2
 local _pi 							= math.pi
