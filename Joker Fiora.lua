@@ -37,7 +37,7 @@ local LocalGameCamp					= Game.Camp;
 local isEvading 					= ExtLibEvade and ExtLibEvade.Evading
 local _targetedMissiles = {}
 local _activeSkillshots = {}
-print("TheJoker Loaded")
+print("Joker Fiora Loaded")
 
 Callback.Add("Load", function() Ronin:OnLoad() end)
 
@@ -62,7 +62,8 @@ function Ronin:myMenu()
 	self.Ronin:MenuElement({id = "Clears", name = "Clear", type = MENU})
 
 	-- Combo
-	self.Ronin.Combo:MenuElement({id = "quse", name = "Use Q", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.9.1/img/passive/Fiora_P.png"})
+	self.Ronin.Combo:MenuElement({id = "quse", name = "Use Q", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.9.1/img/spell/FioraQ.png"})
+	self.Ronin.Combo:MenuElement({id = "qluse", name = "Use Q out of Range", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.9.1/img/spell/FioraQ.png"})
 	self.Ronin.Combo:MenuElement({id = "wuse", name = "W Settings", type = MENU, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.9.1/img/spell/FioraW.png"})
 	self.Ronin.Combo.wuse:MenuElement({id = "w0use", name = "Use W Normal", value = false})
 	self.Ronin.Combo.wuse:MenuElement({id = "spells", name = "Use W for Spells to block", type = MENU})
@@ -325,7 +326,9 @@ end
 function Ronin:Combo(target)
 	if self.target == nil then return end
 	  --Q
-	  if self:IsReadyToCast(_Q) and self:IsValid(self.target, myHero.pos, self.Q.range) and self.Ronin.Combo.quse:Value() then
+	  if self:IsReadyToCast(_Q) and not self:IsValid(self.target, myHero.pos, self.Q.range) and self:IsValid(self.target, myHero.pos, 1000) and self.Ronin.Combo.qluse:Value() then
+		Control.CastSpell(HK_Q, self.target)
+	  elseif self:IsReadyToCast(_Q) and self:IsValid(self.target, myHero.pos, self.Q.range) and self.Ronin.Combo.quse:Value() then
 		Control.CastSpell(HK_Q, self.target)
 	  end
 	  --W
