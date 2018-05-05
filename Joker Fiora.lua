@@ -66,6 +66,8 @@ function Ronin:myMenu()
 	self.Ronin.Combo:MenuElement({id = "qluse", name = "Use Q out of Range", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.9.1/img/spell/FioraQ.png"})
 	self.Ronin.Combo:MenuElement({id = "wuse", name = "W Settings", type = MENU, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.9.1/img/spell/FioraW.png"})
 	self.Ronin.Combo.wuse:MenuElement({id = "w0use", name = "Use W Normal", value = false})
+	self.Ronin.Combo.wuse:MenuElement({id = "wsmart", name = "Use Smart W", value = true,})
+	self.Ronin.Combo.wuse:MenuElement({id = "wHp", name = "HP % to use Smart W", value = 10, min = 0, max = 100, step = 1})
 	self.Ronin.Combo.wuse:MenuElement({id = "spells", name = "Use W for Spells to block", type = MENU})
 	self.Ronin.Combo.wuse.spells:MenuElement({id = "wblock", name = "Use W Spell block", value = true})
 	self.Ronin.Combo:MenuElement({id = "euse", name = "Use E", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.9.1/img/spell/FioraE.png"})
@@ -331,20 +333,23 @@ function Ronin:Combo(target)
 	  elseif self:IsReadyToCast(_Q) and self:IsValid(self.target, myHero.pos, self.Q.range) and self.Ronin.Combo.quse:Value() then
 		Control.CastSpell(HK_Q, self.target)
 	  end
-	  --W
-	  --local hitRate, aimPosition = HPred:GetImmobileTarget(myHero.pos, self.W.range, self.W.delay, self.W.speed, self.W.width, self.W.collision, 1,nil)
+	  --W Normal
 	  if self:IsReadyToCast(_W) and self:IsValid(self.target, myHero.pos, self.W.range) and self.Ronin.Combo.wuse.w0use:Value() then
 		Control.CastSpell(HK_W, self.target)
+	  end
+	  --W Smart
+	  if self:IsReadyToCast(_W) and self.Ronin.Combo.wuse.wsmart:Value() and self:GetHpPercent(myHero) <= self.Ronin.Combo.wuse.wHp:Value() and self:IsValid(self.target, myHero.pos, self.W.range) then
+		Control.CastSpell(HK_R, self.target)
 	  end
 	  --E
 	  if self:IsReadyToCast(_E) and self:IsValid(self.target, myHero.pos, self.E.range) and self.Ronin.Combo.euse:Value() then
 		  Control.CastSpell(HK_E)
 	  end
 	  --R Smart
-	  if self:IsReadyToCast(_R) and self.Ronin.Combo.rset.rsmart:Value() and self:GetHpPercent(myHero) <= self.Ronin.Combo.rset.rHp:Value() then
+	  if self:IsReadyToCast(_R) and self.Ronin.Combo.rset.rsmart:Value() and self:GetHpPercent(myHero) <= self.Ronin.Combo.rset.rHp:Value() and self:IsValid(self.target, myHero.pos, self.R.range) then
 		Control.CastSpell(HK_R, self.target)
 	  --R Normal
-	  elseif self:IsReadyToCast(_R) and self.Ronin.Combo.rset.ruse:Value() then
+	  elseif self:IsReadyToCast(_R) and self.Ronin.Combo.rset.ruse:Value() and self:IsValid(self.target, myHero.pos, self.R.range) then
 		Control.CastSpell(HK_R, self.target)
 	  end
 	  --Ignite
