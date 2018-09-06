@@ -37,7 +37,7 @@ local LocalGameCamp					= Game.Camp;
 local isEvading 					= ExtLibEvade and ExtLibEvade.Evading
 local _targetedMissiles = {}
 local _activeSkillshots = {}
-print("TheJoker Loaded")
+print("Ronin Tune Loaded")
 
 Callback.Add("Load", function() Ronin:OnLoad() end)
 
@@ -60,7 +60,8 @@ function Ronin:myMenu()
 self.Ronin = MenuElement({id = "Ronin", name = "Ronin Tune", type = MENU, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/champion/Nocturne.png"})
 self.Ronin:MenuElement({id = "Combo", name = "Combo", type = MENU, leftIcon = 
     "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/passive/Nocturne_UmbraBlades.png"})
-self.Ronin:MenuElement({id = "Clears", name = "Clear", type = MENU})
+self.Ronin:MenuElement({id = "Clears", name = "Clear", type = MENU, leftIcon = 
+    ""})
 
 -- Combo
 self.Ronin.Combo:MenuElement({id = "ComboOption", name = "Combo Settings", type = MENU})
@@ -318,7 +319,7 @@ if self:IsReadyToCast(_W) and self.Ronin.Combo.wuse.spells.wblock:Value() and se
           _find(current.activeSpell.name:lower(), "attack") then
         for j = 0, 3 do
           local spell = current:GetSpellData(j)
-          if self.Ronin.Combo.quse.spells[spell.name] and self.Ronin.Combo.quse.spells[spell.name]:Value() and spell.name == current.activeSpell.name then
+          if self.Ronin.Combo.wuse.spells[spell.name] and self.Ronin.Combo.wuse.spells[spell.name]:Value() and spell.name == current.activeSpell.name then
             local startPos = current.activeSpell.startPos
             local placementPos = current.activeSpell.placementPos
             local width = 0
