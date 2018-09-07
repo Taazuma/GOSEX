@@ -68,7 +68,7 @@ self.Ronin.Combo:MenuElement({id = "ComboOption", name = "Combo Settings", type 
 self.Ronin.Combo.ComboOption:MenuElement({id = "firstc", name = "R - E - W - Q", value = false, type = MENU})
 self.Ronin.Combo.ComboOption:MenuElement({id = "twoc", name = "R - E - Q", value = false, type = MENU})
 self.Ronin.Combo.ComboOption:MenuElement({id = "threec", name = "R - Q - E", value = true, type = MENU})
-self.Ronin.Combo:MenuElement({id = "quse", name = "Use Q", type = MENU, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneDuskbringer.png"})
+self.Ronin.Combo:MenuElement({id = "quse", name = "Use Q", leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneDuskbringer.png"})
 self.Ronin.Combo:MenuElement({id = "wuse", name = "W Settings", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneShroudofDarkness.png"})
 self.Ronin.Combo.wuse:MenuElement({id = "spells", name = "Use W for Spells to block", type = MENU})
 self.Ronin.Combo.wuse.spells:MenuElement({id = "wblock", name = "Use W Spell block", value = true})
