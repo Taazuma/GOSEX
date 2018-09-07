@@ -73,8 +73,8 @@ self.Ronin.Combo:MenuElement({id = "wuse", name = "W Settings", value = true, le
 self.Ronin.Combo.wuse:MenuElement({id = "spells", name = "Use W for Spells to block", type = MENU})
 self.Ronin.Combo.wuse.spells:MenuElement({id = "wblock", name = "Use W Spell block", value = true})
 self.Ronin.Combo:MenuElement({id = "euse", name = "Use E", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneUnspeakableHorror.png"})
-self.Ronin.Combo:MenuElement({id = "rset", name = "R Settings", type = MENU, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneParanoia.png"})
-self.Ronin.Combo.rset:MenuElement({id = "ruse", name = "Use Normal R", value = false})
+self.Ronin.Combo:MenuElement({id = "ruse", name = "Use Normal R", leftIcon = 
+    "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneParanoia.png"})
 
 -- Clear
 self.Ronin.Clears:MenuElement({id = "quse", name = "Use Q", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneDuskbringer.png"})
@@ -356,7 +356,7 @@ function Ronin:Combo(target)
 if self.target == nil then return end
   if self.RoninCombo.ComboOption.firstc:Value() then
     --R Normal
-    if self:IsReadyToCast(_R) and self.Ronin.Combo.rset.ruse:Value() then
+    if self:IsReadyToCast(_R) and self.Ronin.Combo.ruse:Value() then
       Control.CastSpell(HK_R)
       Control.CastSpell(HK_R, self.target)
     end
@@ -377,7 +377,7 @@ if self.target == nil then return end
     end
   elseif self.RoninCombo.ComboOption.twoc:Value() then
         --R Normal
-    if self:IsReadyToCast(_R) and self.Ronin.Combo.rset.ruse:Value() then
+    if self:IsReadyToCast(_R) and self.Ronin.Combo.ruse:Value() then
       Control.CastSpell(HK_R)
       Control.CastSpell(HK_R, self.target)
     end
@@ -390,7 +390,7 @@ if self.target == nil then return end
       Control.CastSpell(HK_Q, aimPosition)
     end
   elseif self.RoninCombo.ComboOption.threec:Value() then
-    if self:IsReadyToCast(_R) and self.Ronin.Combo.rset.ruse:Value() then
+    if self:IsReadyToCast(_R) and self.Ronin.Combo.ruse:Value() then
       Control.CastSpell(HK_R)
       Control.CastSpell(HK_R, self.target)
     end
