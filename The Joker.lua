@@ -50,10 +50,10 @@ function Ronin:OnLoad()
 end
 
 function Ronin:mySpells()
-	self.Q = { range = 400, width = myHero:GetSpellData(_Q).width, delay = 0.15, speed = myHero:GetSpellData(_Q).speed }
-	self.W = { range = 500, width = myHero:GetSpellData(_W).width, collision = false, delay = 0.15, speed = myHero:GetSpellData(_W).speed }
-	self.E = { range = 625, width = myHero:GetSpellData(_E).width, delay = 0.15, speed = myHero:GetSpellData(_E).speed }
-	self.R = { range = 25000, width = myHero:GetSpellData(_R).width, delay = 0.15, speed = math.huge }
+	self.Q = { range = 400, width = myHero:GetSpellData(_Q).width, delay = myHero:GetSpellData(_Q).delay, speed = myHero:GetSpellData(_Q).speed }
+	self.W = { range = 500, width = myHero:GetSpellData(_W).width, collision = false, delay = myHero:GetSpellData(_W).delay, speed = myHero:GetSpellData(_W).speed }
+	self.E = { range = 625, width = myHero:GetSpellData(_E).width, delay = myHero:GetSpellData(_E).delay, speed = myHero:GetSpellData(_E).speed }
+	self.R = { range = 25000, width = myHero:GetSpellData(_R).width, delay = myHero:GetSpellData(_R).delay, speed = math.huge }
 end
   
 function Ronin:myMenu()
