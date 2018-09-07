@@ -50,7 +50,7 @@ end
 
 function Ronin:mySpells()
 self.Q = { range = 75, width = myHero:GetSpellData(_Q).width, delay = myHero:GetSpellData(_Q).delay, speed = myHero:GetSpellData(_Q).speed}
-self.W = { range = 600, width = myHero:GetSpellData(_W).width, collision = false, myHero:GetSpellData(_W).delay, speed = myHero:GetSpellData(_W).speed }
+self.W = { range = 600, width = myHero:GetSpellData(_W).width, collision = false, delay = 0.20, speed = myHero:GetSpellData(_W).speed }
 self.E = { range = 700, width = myHero:GetSpellData(_E).width, delay = myHero:GetSpellData(_E), speed = myHero:GetSpellData(_E).speed }
 self.R = { range = 600, width = myHero:GetSpellData(_R).width, delay = myHero:GetSpellData(_R).delay, speed = myHero:GetSpellData(_R).speed }
 end
@@ -64,8 +64,8 @@ self.Ronin:MenuElement({id = "Clears", name = "Clear", type = MENU, leftIcon =
 
 -- Combo
 self.Ronin.Combo:MenuElement({id = "quse", name = "Use Q", leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/YorickQ.png"})
-self.Ronin.Combo:MenuElement({id = "wuse", name = "Use W", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/YorickW.png"})
-self.Ronin.Combo:MenuElement({id = "euse", name = "Use E", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/YorickE.png"})
+self.Ronin.Combo:MenuElement({id = "wuse", name = "Use W", leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/YorickW.png"})
+self.Ronin.Combo:MenuElement({id = "euse", name = "Use E", leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/YorickE.png"})
 self.Ronin.Combo:MenuElement({id = "ruse", name = "Use R default", leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/YorickR.png"})
 self.Ronin.Combo:MenuElement({id = "wrin", name = "Use W-R Insec", leftIcon = "http://i.epvpimg.com/8rRreab.png"})
 
@@ -267,7 +267,8 @@ end
 function Ronin:OnTick()
 
 if myHero.dead or Game.IsChatOpen() == true or IsRecalling or InShop then return end
-
+Orb:GetMode()
+self.target = self:GetTarget(800)
 --combo, clear tick
 if Orb.combo and self.target ~= nil and not isEvading then
   self:Combo(self.target)
@@ -278,28 +279,26 @@ end
 
 function Ronin:Combo(target)
 if self.target == nil then return end
-  local hitRate, aimPosition = HPred:GetImmobileTarget(myHero.pos, self.W.range, self.W.delay, self.W.speed,  self.W.width, self.W.collision, 1, nil)
-  local hitRate2, aimPosition2 = HPred:GetImmobileTarget(myHero.pos, self.E.range, self.E.delay, self.E.speed,  self.E.width, self.E.collision, 1, nil)
-    -- E --
-  if self:IsOnScreen() and self:IsReadyToCast(_E) and self:IsValid(self.E.range - 5, self.target) and self.Ronin.Combo.euse:Value() then
-      Control.CastSpell(HK_E, aimPosition2)
-  end
-    -- W -  R insec
-  if self:IsOnScreen() and self:IsReadyToCast(_W) and self:IsValid(self.W.range - 5, self.target) and self.Ronin.Combo.wrin:Value() and self:IsReadyToCast(_R) then
-    Control.CastSpell(HK_W, aimPosition)
-    Control.CastSpell(HK_R, aimPosition)
-      -- W --
-  elseif self:IsOnScreen() and self:IsReadyToCast(_W) and self:IsValid(self.W.range, self.target) and self.Ronin.Combo.wuse:Value() then
-    Control.CastSpell(HK_W, aimPosition)
-  end
-  -- R
-  if self:IsOnScreen() and self:IsReadyToCast(_R) and self:IsValid(self.R.range, self.target) and self.Ronin.Combo.ruse:Value() then
-    Control.CastSpell(HK_R, self.target)
-  end
-  -- Q --
-if self:IsOnScreen() and self:IsReadyToCast(_Q) and self:IsValid(self.Q.range, self.target) and self.Ronin.Combo.quse:Value() then
-  Control.KeyUp(HK_Q)
-end
+	-- E --
+	if self:IsReadyToCast(_E) and self:IsValid(self.target, myHero.pos, self.E.range) and self.Ronin.Combo.euse:Value() then
+	  Control.CastSpell(HK_E, self.target)
+	end
+	-- W -  R insec
+	if self:IsReadyToCast(_W) and self:IsValid(self.target, myHero.pos, self.W.range) and self.Ronin.Combo.wrin:Value() and self:IsReadyToCast(_R) then
+	Control.CastSpell(HK_W, self.target)
+	Control.CastSpell(HK_R, self.target)
+	  -- W --
+	elseif self:IsReadyToCast(_W) and self:IsValid(self.target, myHero.pos, self.W.range) and self.Ronin.Combo.wuse:Value() then
+	Control.CastSpell(HK_W, self.target)
+	end
+	-- R
+	if  self:IsReadyToCast(_R) and self:IsValid(self.target, myHero.pos, self.R.range) and self.Ronin.Combo.ruse:Value() then
+	Control.CastSpell(HK_R, self.target)
+	end
+	-- Q --
+	if self:IsReadyToCast(_Q) and self.Ronin.Combo.quse:Value() then
+	  Control.KeyUp(HK_Q)
+	end
     --
 end
 

@@ -64,11 +64,11 @@ self.Ronin:MenuElement({id = "Clears", name = "Clear", type = MENU, leftIcon =
 
 -- Combo
 self.Ronin.Combo:MenuElement({id = "ComboOption", name = "Combo Settings", type = MENU})
-self.Ronin.Combo.ComboOption:MenuElement({id = "firstc", name = "R - E - W - Q", value = false, type = MENU})
-self.Ronin.Combo.ComboOption:MenuElement({id = "twoc", name = "R - E - Q", value = false, type = MENU})
-self.Ronin.Combo.ComboOption:MenuElement({id = "threec", name = "R - Q - E", value = true, type = MENU})
+self.Ronin.Combo.ComboOption:MenuElement({id = "firstc", name = "R - E - W - Q", value = false})
+self.Ronin.Combo.ComboOption:MenuElement({id = "twoc", name = "R - E - Q", value = false})
+self.Ronin.Combo.ComboOption:MenuElement({id = "threec", name = "R - Q - E", value = true})
 self.Ronin.Combo:MenuElement({id = "quse", name = "Use Q", leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneDuskbringer.png"})
-self.Ronin.Combo:MenuElement({id = "wuse", name = "W Settings", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneShroudofDarkness.png"})
+self.Ronin.Combo:MenuElement({id = "wuse", name = "W Settings", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneShroudofDarkness.png" , type = MENU})
 self.Ronin.Combo.wuse:MenuElement({id = "spells", name = "Use W for Spells to block", type = MENU})
 self.Ronin.Combo.wuse.spells:MenuElement({id = "wblock", name = "Use W Spell block", value = true})
 self.Ronin.Combo:MenuElement({id = "euse", name = "Use E", value = true, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/spell/NocturneUnspeakableHorror.png"})
@@ -281,16 +281,16 @@ for i = 1, LocalGameHeroCount(i) do
       local enemy = t
       local spellName = enemy:GetSpellData(slot).name
       if slot == 0 then
-        self.Ronin.Combo.quse.spells:MenuElement({ id = spellName, name = enemy.charName.."- Q", value = true })
+        self.Ronin.Combo.wuse.spells:MenuElement({ id = spellName, name = enemy.charName.."- Q", value = true })
       end
       if slot == 1 then
-        self.Ronin.Combo.quse.spells:MenuElement({ id = spellName, name = enemy.charName.."- W", value = true })
+        self.Ronin.Combo.wuse.spells:MenuElement({ id = spellName, name = enemy.charName.."- W", value = true })
       end
       if slot == 2 then
-        self.Ronin.Combo.quse.spells:MenuElement({ id = spellName, name = enemy.charName.."- E", value = true })
+        self.Ronin.Combo.wuse.spells:MenuElement({ id = spellName, name = enemy.charName.."- E", value = true })
       end
       if slot == 3 then
-        self.Ronin.Combo.quse.spells:MenuElement({ id = spellName, name = enemy.charName.."- R", value = true })
+        self.Ronin.Combo.wuse.spells:MenuElement({ id = spellName, name = enemy.charName.."- R", value = true })
       end			
     end
   end
@@ -353,7 +353,7 @@ end
 
 function Ronin:Combo(target)
 if self.target == nil then return end
-  if self.RoninCombo.ComboOption.firstc:Value() then
+  if self.Ronin.Combo.ComboOption.firstc:Value() then
     --R Normal
     if self:IsReadyToCast(_R) and self.Ronin.Combo.ruse:Value() then
       Control.CastSpell(HK_R)
@@ -368,13 +368,12 @@ if self.target == nil then return end
       Control.CastSpell(HK_W)
     end
     --Q
-    local hitRate, aimPosition = HPred:GetImmobileTarget(myHero.pos, self.Q.range, self.Q.delay, self.Q.speed, self.Q.width, self.Q.collision, 1, nil)
     if self:IsReadyToCast(_Q) and self:IsValid(self.target, myHero.pos, self.Q.range) and self.Ronin.Combo.quse:Value() then
-      Control.CastSpell(HK_Q, aimPosition)
+      Control.CastSpell(HK_Q, self.target)
     elseif self:IsReadyToCast(_Q) and self:IsValid(self.target, myHero.pos, self.Q.range) and self.Ronin.Combo.quse:Value() then
-      Control.CastSpell(HK_Q, aimPosition)
+      Control.CastSpell(HK_Q, self.target)
     end
-  elseif self.RoninCombo.ComboOption.twoc:Value() then
+  elseif self.Ronin.Combo.ComboOption.twoc:Value() then
         --R Normal
     if self:IsReadyToCast(_R) and self.Ronin.Combo.ruse:Value() then
       Control.CastSpell(HK_R)
@@ -384,19 +383,19 @@ if self.target == nil then return end
       Control.CastSpell(HK_E, self.target)
     end
     if self:IsReadyToCast(_Q) and self:IsValid(self.target, myHero.pos, self.Q.range) and self.Ronin.Combo.quse:Value() then
-      Control.CastSpell(HK_Q, aimPosition)
+      Control.CastSpell(HK_Q, self.target)
     elseif self:IsReadyToCast(_Q) and self:IsValid(self.target, myHero.pos, self.Q.range) and self.Ronin.Combo.quse:Value() then
-      Control.CastSpell(HK_Q, aimPosition)
+      Control.CastSpell(HK_Q, self.target)
     end
-  elseif self.RoninCombo.ComboOption.threec:Value() then
+  elseif self.Ronin.Combo.ComboOption.threec:Value() then
     if self:IsReadyToCast(_R) and self.Ronin.Combo.ruse:Value() then
       Control.CastSpell(HK_R)
       Control.CastSpell(HK_R, self.target)
     end
     if self:IsReadyToCast(_Q) and self:IsValid(self.target, myHero.pos, self.Q.range) and self.Ronin.Combo.quse:Value() then
-      Control.CastSpell(HK_Q, aimPosition)
+      Control.CastSpell(HK_Q, self.target)
     elseif self:IsReadyToCast(_Q) and self:IsValid(self.target, myHero.pos, self.Q.range) and self.Ronin.Combo.quse:Value() then
-      Control.CastSpell(HK_Q, aimPosition)
+      Control.CastSpell(HK_Q, self.target)
     end
     if self:IsReadyToCast(_E) and self:IsValid(self.target, myHero.pos, self.E.range) and self.Ronin.Combo.euse:Value() then
       Control.CastSpell(HK_E, self.target)
