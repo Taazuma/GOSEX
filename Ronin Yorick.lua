@@ -49,10 +49,10 @@ Callback.Add("Tick", function() self:OnTick() end)
 end
 
 function Ronin:mySpells()
-self.Q = { range = 75, width = myHero:GetSpellData(_Q).width, delay = 0.15, speed = myHero:GetSpellData(_Q).speed}
-self.W = { range = 600, width = myHero:GetSpellData(_W).width, collision = false, delay = 0.15, speed = myHero:GetSpellData(_W).speed }
-self.E = { range = 700, width = myHero:GetSpellData(_E).width, delay = 0.15, speed = myHero:GetSpellData(_E).speed }
-self.R = { range = 600, width = myHero:GetSpellData(_R).width, delay = 0.15, speed = myHero:GetSpellData(_R).speed }
+self.Q = { range = 75, width = myHero:GetSpellData(_Q).width, delay = myHero:GetSpellData(_Q).delay, speed = myHero:GetSpellData(_Q).speed}
+self.W = { range = 600, width = myHero:GetSpellData(_W).width, collision = false, myHero:GetSpellData(_W).delay, speed = myHero:GetSpellData(_W).speed }
+self.E = { range = 700, width = myHero:GetSpellData(_E).width, delay = myHero:GetSpellData(_E), speed = myHero:GetSpellData(_E).speed }
+self.R = { range = 600, width = myHero:GetSpellData(_R).width, delay = myHero:GetSpellData(_R).delay, speed = myHero:GetSpellData(_R).speed }
 end
 
 function Ronin:myMenu()
@@ -281,25 +281,25 @@ if self.target == nil then return end
   local hitRate, aimPosition = HPred:GetImmobileTarget(myHero.pos, self.W.range, self.W.delay, self.W.speed,  self.W.width, self.W.collision, 1, nil)
   local hitRate2, aimPosition2 = HPred:GetImmobileTarget(myHero.pos, self.E.range, self.E.delay, self.E.speed,  self.E.width, self.E.collision, 1, nil)
     -- E --
-	if self:IsReadyToCast(_E) and self:IsValid(self.E.range - 5, self.target) and self.Ronin.Combo.euse:Value() then
+  if self:IsOnScreen() and self:IsReadyToCast(_E) and self:IsValid(self.E.range - 5, self.target) and self.Ronin.Combo.euse:Value() then
       Control.CastSpell(HK_E, aimPosition2)
   end
     -- W -  R insec
-  if self:IsReadyToCast(_W) and self:IsValid(self.W.range - 5, self.target) and self.Ronin.Combo.wrin:Value() and self:IsReadyToCast(_R) then
+  if self:IsOnScreen() and self:IsReadyToCast(_W) and self:IsValid(self.W.range - 5, self.target) and self.Ronin.Combo.wrin:Value() and self:IsReadyToCast(_R) then
     Control.CastSpell(HK_W, aimPosition)
     Control.CastSpell(HK_R, aimPosition)
-    	-- W --
-	elseif self:IsReadyToCast(_W) and self:IsValid(self.W.range, self.target) and self.Ronin.Combo.wuse:Value() then
-		Control.CastSpell(HK_W, aimPosition)
+      -- W --
+  elseif self:IsOnScreen() and self:IsReadyToCast(_W) and self:IsValid(self.W.range, self.target) and self.Ronin.Combo.wuse:Value() then
+    Control.CastSpell(HK_W, aimPosition)
   end
   -- R
-  if self:IsReadyToCast(_R) and self:IsValid(self.R.range, self.target) and self.Ronin.Combo.ruse:Value() then
+  if self:IsOnScreen() and self:IsReadyToCast(_R) and self:IsValid(self.R.range, self.target) and self.Ronin.Combo.ruse:Value() then
     Control.CastSpell(HK_R, self.target)
   end
-    -- Q --
-  if self:IsReadyToCast(_Q) and self:IsValid(self.Q.range, self.target) and self.Ronin.Combo.quse:Value() then
-    Control.KeyUp(HK_Q)
-  end
+  -- Q --
+if self:IsOnScreen() and self:IsReadyToCast(_Q) and self:IsValid(self.Q.range, self.target) and self.Ronin.Combo.quse:Value() then
+  Control.KeyUp(HK_Q)
+end
     --
 end
 
