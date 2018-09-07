@@ -59,9 +59,9 @@ end
 function Ronin:myMenu()
 self.Ronin = MenuElement({id = "Ronin", name = "Ronin Tune", type = MENU, leftIcon = "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/champion/Nocturne.png"})
 self.Ronin:MenuElement({id = "Combo", name = "Combo", type = MENU, leftIcon = 
-    "https://ddragon.leagueoflegends.com/cdn/8.17.1/img/passive/Nocturne_UmbraBlades.png"})
+    "http://i.epvpimg.com/RHvqdab.png"})
 self.Ronin:MenuElement({id = "Clears", name = "Clear", type = MENU, leftIcon = 
-    ""})
+    "http://i.epvpimg.com/kASKcab.png"})
 
 -- Combo
 self.Ronin.Combo:MenuElement({id = "ComboOption", name = "Combo Settings", type = MENU})
